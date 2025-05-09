@@ -92,6 +92,23 @@ client = Ollama.new(
   options: { server_sent_events: true }
 )
 
+# Validate if the model exists, and install it if it doesn't
+model_installed = false
+client.tags[0]['models'].each do |tag|
+  if tag['model'] == OLLAMA_MODEL
+    model_installed = true
+    break
+  else
+    model_installed = false
+  end
+end
+
+if model_installed == false
+  puts "Model '#{OLLAMA_MODEL}' not found on server. Pulling..."
+  client.pull(model: OLLAMA_MODEL)
+  puts "Model '#{OLLAMA_MODEL}' has been downloaded."
+end
+
 puts 'Connected. Submitting log to LLM for analysis. Waiting while LLM is processing...'
 
 result = ''
