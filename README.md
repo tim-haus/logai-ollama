@@ -4,11 +4,9 @@ A simple Ruby script using `ollama-ai` Rubygem.
 ## Setup
 Ensure you have Rubygems Bundler installed.
 
-Run:
-Clone repo.
-`bundle install` in the directory.
-Copy `config.yml.tpl` to `config.yml` and modify accordingly to your preference.
-Modify `query_ai.rb` to point to the correct LLM endpoint and log.
+- Clone repo.
+- `bundle install` in the directory.
+- Copy `config.yml.tpl` to `config.yml` and modify accordingly to your preference.
 
 ## Usage
 ```
