@@ -83,7 +83,7 @@ prompt_variables = {
   LOG_CONTENT: log_content
 }
 
-ANALYSIS_PROMPT = config['prompt'] % config_variables
+ANALYSIS_PROMPT = config['prompt'] % prompt_variables
 
 puts "Prompt prepared. Connecting to LLM using model #{OLLAMA_MODEL}..."
 
