@@ -56,11 +56,7 @@ elsif (options[:log_age].nil? && options[:log_type] == 'journalctl')
   exit 1
 end
 
-# Example use of parsed options
-puts "Options: #{options.inspect}"
-
 log_content = ''
-
 case(options[:log_type])
 when 'journalctl'
   # Pull journalctl
