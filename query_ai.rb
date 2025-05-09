@@ -19,12 +19,17 @@ LOG_JOURNAL_AGE_HRS = 24
 options = {}
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: query_ai.rb --type [journalctl,file] --filepath PATH_IF_FILE_TYPE"
+
   opts.on("-t", "--type TYPE", "Specify a type. Supported: [journalctl, file]") do |t|
     options[:log_type] = t
   end
 
-  opts.on("-f", "--file FILEPATH", "Specify a the file path. Only used if --type is set to file.") do |t|
+  opts.on("-f", "--file FILEPATH", "Specify the file path. Required if --type is set to file.") do |t|
     options[:log_file] = t
+  end
+
+  opts.on("-a", "--age HOURS", "Specify the age of logs to pull from journalctl. Required if --type is set to journalctl.") do |t|
+    options[:log_age] = t
   end
 
   opts.on("-h", "--help", "Prints this dialog.") do
@@ -48,6 +53,10 @@ if options[:log_type].nil?
   exit 1
 elsif (options[:log_file].nil? && options[:log_type] == 'file')
   puts "Error: --file is required if --type is set to file."
+  puts parser
+  exit 1
+elsif (options[:log_age].nil? && options[:log_type] == 'journalctl')
+  puts "Error: --age is required if --type is set to journalctl."
   puts parser
   exit 1
 end
