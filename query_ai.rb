@@ -11,11 +11,6 @@ config = YAML.load_file('config.yml')
 OLLAMA_SERVER = config['server']
 OLLAMA_MODEL = config['model']
 
-# Only if LOG_TYPE = 'journalctl'
-# Number of hours back to pull logs
-# TODO: Needs to be externalized somehow
-LOG_JOURNAL_AGE_HRS = 24
-
 options = {}
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: query_ai.rb --type [journalctl,file] --filepath PATH_IF_FILE_TYPE"
@@ -69,7 +64,7 @@ log_content = ''
 case(options[:log_type])
 when 'journalctl'
   # Pull journalctl
-  log_content = `journalctl --since "#{LOG_JOURNAL_AGE_HRS} hours ago" --no-pager`
+  log_content = `journalctl --since "#{options[:log_age]} hours ago" --no-pager`
 when 'file'
   # Read file for submission.
   log_content = File.read(options[:log_file])
