@@ -1,0 +1,5 @@
+server: http://192.168.0.60:11434
+model: granite3.3:8b
+output:
+  path: ./output
+  file_template:
