@@ -20,7 +20,7 @@ Usage: query_ai.rb --type [journalctl,file] --filepath PATH_IF_FILE_TYPE
 ## TODO
 The following are what I'd like to do next:
 
-- Externalize configuration to yaml file
-- Clean up readme
+- ~~Externalize configuration to yaml file~~
+- ~~Clean up readme~~
 - Add different types of log types
-- Integrate with Jenkins?
+- Integrate with Jenkins -- started with `Jenkinsfile`
