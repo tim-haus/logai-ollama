@@ -4,14 +4,12 @@ model: granite3.3:8b
 # Allowed variables for output (contain within %{}):
 # LOG_TYPE: Type of log [journalctl, file]
 # TIMESTAMP: Current timestamp of generated file
-
 output:
   path: ./output
   file_template: log_%{LOG_TYPE}_%{TIMESTAMP}
 
 # Allowed variables for prompt (contain within %{}):
 # LOG_CONTENT: contents of the log parsed based on file definition. Only works in prompt.
-
 prompt: |
   You are a helpful IT assistant. Based on the below log, can you call out any WARNING, ERROR, CRITICAL, or FATAL log entries with their timestamp in PST, and give a brief synopsis of what that log calls out. If there are none that match this, let the user know and don't worry about the synopsis.
   
