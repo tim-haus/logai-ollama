@@ -1,5 +1,6 @@
 pipeline {
     parameters {
+      choice(name: 'AGENT', description: 'Target agent to run against.')
       choice(name: 'LOG_TYPE', choices: ['journalctl', 'file'], description: 'The type of log we\'re capturing.')
       string(name: 'LOG_FILE', defaultValue: '/var/logs/systemlog', description: 'Log file path. Unused if LOG_TYPE is "file".')
     }
@@ -12,9 +13,12 @@ pipeline {
             }
         }
         stage('Analyze Log') {
+          agent {
+            label "${params.AGENT}"
+          }
           steps {
             sh 'ruby ./query_ai.rb'
           }
         }
-    }
+    }∂
 }
