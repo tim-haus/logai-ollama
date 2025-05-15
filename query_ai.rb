@@ -104,9 +104,14 @@ client.tags[0]['models'].each do |tag|
 end
 
 if model_installed == false
-  puts "Model '#{OLLAMA_MODEL}' not found on server. Pulling..."
-  client.pull(model: OLLAMA_MODEL)
-  puts "Model '#{OLLAMA_MODEL}' has been downloaded."
+  puts "Model #{OLLAMA_MODEL} not found on server. Pulling..."
+  client.pull( {model: OLLAMA_MODEL }) do |event,raw|
+    if event['status'] == 'success'
+      puts "Model #{OLLAMA_MODEL} has been downloaded."
+    end
+  end
+else
+  puts "Model #{OLLAMA_MODEL} exists. Continuing."
 end
 
 puts 'Connected. Submitting log to LLM for analysis. Waiting while LLM is processing...'
