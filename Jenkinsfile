@@ -11,7 +11,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Git Checkout here
+                checkout([
+                  $class: 'GitSCM',
+                  branches: [[name: '*/main']],
+                  userRemoteConfigs: [[url: 'git@github.com:tim-haus/logai-ollama.git']]
+                ])
             }
         }
         stage('Analyze Log') {
