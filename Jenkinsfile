@@ -5,6 +5,7 @@ pipeline {
       string(name: 'OLLAMA_SERVER', defaultValue: '', description: 'Ollama server address. Leave blank to use the config.yml definition.')
       choice(name: 'LOG_TYPE', choices: ['journalctl', 'file'], description: 'The type of log we\'re capturing.')
       string(name: 'LOG_FILE', defaultValue: '/var/logs/systemlog', description: 'Log file path. Unused if LOG_TYPE is "file".')
+      string(name: 'AGE', defaultValue: '', description: 'Age value for journalctl logs. Only used if LOG_TYPE is "journalctl".')
     }
     agent {
       label "${params.AGENT}"
@@ -32,6 +33,9 @@ pipeline {
             }
             if (params.OLLAMA_SERVER == '') {
                 cmd += " --server ${params.OLLAMA_SERVER}"
+            }
+            if (params.LOG_TYPE == 'journalctl' && params.AGE?.trim()) {
+                cmd += " --age ${params.AGE}"
             }
             echo "Running Command: ${cmd}"
             sh cmd
