@@ -8,9 +8,6 @@ require_relative 'conversion_functions'
 
 config = YAML.load_file('config.yml')
 
-OLLAMA_SERVER = config['server']
-OLLAMA_MODEL = config['model']
-
 options = {}
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: query_ai.rb --type [journalctl,file] --filepath PATH_IF_FILE_TYPE"
@@ -27,6 +24,14 @@ parser = OptionParser.new do |opts|
     options[:log_age] = t
   end
 
+  opts.on("-s", "--server ADDRESS", "Specify the Ollama server address.") do |s|
+    options[:server] = s
+  end
+
+  opts.on("-m", "--model MODEL", "Specify the Ollama model name.") do |m|
+    options[:model] = m
+  end
+
   opts.on("-h", "--help", "Prints this dialog.") do
     puts opts
     exit
@@ -41,6 +46,9 @@ rescue OptionParser::InvalidOption => e
   exit 1
 end
 
+OLLAMA_SERVER = options[:server] || config['server']
+OLLAMA_MODEL = options[:model] || config['model']
+
 # Parameter validation
 if options[:log_type].nil?
   puts "Error: --type is required."
@@ -52,6 +60,12 @@ elsif (options[:log_file].nil? && options[:log_type] == 'file')
   exit 1
 elsif (options[:log_age].nil? && options[:log_type] == 'journalctl')
   puts "Error: --age is required if --type is set to journalctl."
+  puts parser
+  exit 1
+end
+
+if OLLAMA_SERVER.nil? || OLLAMA_MODEL.nil?
+  puts "Error: Both --server and --model must be specified, either in the command line or config.yml."
   puts parser
   exit 1
 end
