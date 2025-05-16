@@ -1,4 +1,13 @@
-require 'ollama-ai'
+def ensure_gem(gem_name)
+  require gem_name
+rescue LoadError
+  puts "Installing missing gem: #{gem_name}..."
+  system("gem install #{gem_name}") || abort("❌ Failed to install #{gem_name}")
+  Gem.clear_paths
+  require gem_name
+end
+
+ensure_gem 'ollama-ai'
 require 'json'
 require 'benchmark'
 require 'yaml'
