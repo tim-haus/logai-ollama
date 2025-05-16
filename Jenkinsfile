@@ -1,6 +1,6 @@
 pipeline {
     parameters {
-      choice(name: 'AGENT', description: 'Target agent to run against.')
+      string(name: 'AGENT', description: 'Target agent to run against.')
       string(name: 'OLLAMA_MODEL', defaultValue: '', description: 'Model to use for the Ollama query. Leave blank to use the config.yml definition.')
       string(name: 'OLLAMA_SERVER', defaultValue: '', description: 'Ollama server address. Leave blank to use the config.yml definition.')
       choice(name: 'LOG_TYPE', choices: ['journalctl', 'file'], description: 'The type of log we\'re capturing.')
