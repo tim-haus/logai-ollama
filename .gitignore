@@ -1,3 +1,3 @@
 output/
 *.lock
-config.yml
+#config.yml
