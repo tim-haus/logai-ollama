@@ -25,13 +25,13 @@ pipeline {
           steps {
             script {
             def cmd = "ruby ./query_ai.rb --type ${params.LOG_TYPE}"
-            if (params.LOG_TYPE == 'file') {
+            if (params.LOG_TYPE != 'file') {
                 cmd += " --file ${params.LOG_FILE}"
             }
-            if (params.OLLAMA_MODEL == '') {
+            if (params.OLLAMA_MODEL != '') {
                 cmd += " --model ${params.OLLAMA_MODEL}"
             }
-            if (params.OLLAMA_SERVER == '') {
+            if (params.OLLAMA_SERVER != '') {
                 cmd += " --server ${params.OLLAMA_SERVER}"
             }
             if (params.LOG_TYPE == 'journalctl' && params.AGE?.trim()) {
